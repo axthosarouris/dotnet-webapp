@@ -14,7 +14,7 @@ public class Tests
     [Test]
     public void ShouldReturnHelloOrestisWhenInputIsOrestis()
     {
-        string returnedString = StrReturn.GetString(arg);
-        Assert.AreEqual(returnedString, $"Hello {arg}");
+        string returnedString = VerifyTestIsWorking.GetString(arg);
+        Assert.AreEqual($"Hello {arg}", returnedString);
     }
 }
