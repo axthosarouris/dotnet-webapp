@@ -1,20 +1,15 @@
-using NUnit.Framework;
+
+using Xunit;
+
 namespace PracticeWebApp.Tests;
 
 public class Tests
 {
-    string arg;
-
-    [SetUp]
-    public void Setup()
-    {
-        arg = "Orestis";
-    }
-
-    [Test]
+    [Fact]
     public void ShouldReturnHelloOrestisWhenInputIsOrestis()
     {
-        string returnedString = VerifyTestIsWorking.GetString(arg);
-        Assert.AreEqual($"Hello {arg}", returnedString);
+        string input = "world";
+        string returnedString = VerifyTestIsWorking.GetString(input);
+        Assert.Equal($"Hello {input}", returnedString);
     }
 }
