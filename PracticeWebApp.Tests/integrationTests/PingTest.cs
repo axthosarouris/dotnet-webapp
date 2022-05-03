@@ -1,14 +1,12 @@
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
 namespace PracticeWebApp.Tests.integrationTests;
 
-public class PingTest : IClassFixture<WebApplicationFactory<Program>>
+public partial class PingTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient client;
     private readonly WebApplicationFactory<Program> factory;
@@ -28,20 +26,5 @@ public class PingTest : IClassFixture<WebApplicationFactory<Program>>
         var expected = new Ping { Message = "Hello" };
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         actual.Should().BeEquivalentTo(expected);
-    }
-
-    private static class JsonMapper
-    {
-        private static JsonSerializerOptions defaultOptions = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
-        public static TValue? Deserialize<TValue>(Stream json, JsonSerializerOptions? options = null)
-        {
-            return options == null
-                ? JsonSerializer.Deserialize<TValue>(json, defaultOptions)
-                : JsonSerializer.Deserialize<TValue>(json, options);
-        }
     }
 }
