@@ -4,32 +4,18 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.AspNetCore.TestHost;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using ThirdParty.Json.LitJson;
+using Newtonsoft.Json;
 
 namespace PracticeWebApp.Tests
 {
     internal class IntegrationTest
-    {
-        //private HttpClient _httpClient = null!;
-
-        //public async Task InitializeAsync()
-        //{
-        //    var hostBuilder = 
-        //    //var hostBuilder = new Program()
-        //    //    .ConfigureWebHost(webHostBuilder =>
-        //    //    {
-        //    //        webHostBuilder.UseTestServer();
-        //    //    })
-        //    //    .ConfigureServices((_, services) =>
-        //    //    {
-        //    //        services.AddSingleton(_profileServiceMock.Object);
-        //    //    });
-
-        //    var host = await hostBuilder.StartAsync();
-        //    _httpClient = host.GetTestClient();
-        //}
+    {        
 
         [Test]
-        public async Task ShouleReturnSuccessStatusCode()
+        public async Task ShouldReturnSuccessStatusCode()
         {
             var application = new WebApplicationFactory<Program>()
         .WithWebHostBuilder(builder => {});
@@ -39,16 +25,18 @@ namespace PracticeWebApp.Tests
             response.EnsureSuccessStatusCode();
         }
 
-        //[Test]
-        //public void ShouldContainOKResponseCode()
-        //{
+        [Test]
+        public async Task ShouldReturnHello()
+        {
+            var application = new WebApplicationFactory<Program>()
+        .WithWebHostBuilder(builder => { });
 
-        //}
-
-        //[Test]
-        //public void ShouldContainExpectedBody()
-        //{
-
-        //}
+            HttpClient client = application.CreateClient();
+            HttpResponseMessage response = await client.GetAsync("/ping");
+            var actual = JsonConvert.DeserializeObject<Ping>(
+                await response.Content.ReadAsStringAsync());
+            Assert.AreEqual("Hello", actual.Message);
+        }
+       
     }
 }
