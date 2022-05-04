@@ -29,23 +29,20 @@ namespace PracticeWebApp.Tests
         //}
 
         [Test]
-        public async Task SetupAsync()
+        public async Task ShouleReturnSuccessStatusCode()
         {
             var application = new WebApplicationFactory<Program>()
-        .WithWebHostBuilder(builder =>
-        {
-            TestServer testServer = new TestServer(builder);            
-        });
+        .WithWebHostBuilder(builder => {});
 
             HttpClient client = application.CreateClient();
-            HttpResponseMessage response = await client.GetAsync("/GetPing");
+            HttpResponseMessage response = await client.GetAsync("/ping");
             response.EnsureSuccessStatusCode();
         }
 
         //[Test]
         //public void ShouldContainOKResponseCode()
         //{
-            
+
         //}
 
         //[Test]
