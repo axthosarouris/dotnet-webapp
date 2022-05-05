@@ -1,40 +1,36 @@
 ﻿using NUnit.Framework;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System.Threading.Tasks;
 using System.Net.Http;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using Microsoft.AspNetCore.TestHost;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using ThirdParty.Json.LitJson;
 using Newtonsoft.Json;
+using PracticeWebApp.Tests.integrationTests;
 
 namespace PracticeWebApp.Tests
 {
     internal class IntegrationTest
-    {        
+    {
+        private HttpResponseMessage? response;
+        [SetUp]
+        public void SetUpAsync()
+        {
+            var webApplicationFactory = new CustomWebApplicationFactory<Program>();
+            HttpClient client = webApplicationFactory.CreateClient();        
+            var request = new HttpRequestMessage(HttpMethod.Get, "/ping");
+            response = client.SendAsync(request).Result;            
+        }
 
         [Test]
-        public async Task ShouldReturnSuccessStatusCode()
+        public void ShouldReturnSuccessStatusCode()
         {
-            var application = new WebApplicationFactory<Program>()
-        .WithWebHostBuilder(builder => {});
-
-            HttpClient client = application.CreateClient();
-            HttpResponseMessage response = await client.GetAsync("/ping");
-            response.EnsureSuccessStatusCode();
+            response?.EnsureSuccessStatusCode();
         }
 
         [Test]
         public async Task ShouldReturnHello()
-        {
-            var application = new WebApplicationFactory<Program>()
-        .WithWebHostBuilder(builder => { });
-
-            HttpClient client = application.CreateClient();
-            HttpResponseMessage response = await client.GetAsync("/ping");
+        {            
             var actual = JsonConvert.DeserializeObject<Ping>(
-                await response.Content.ReadAsStringAsync());
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                value: await response?.Content?.ReadAsStringAsync());
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             Assert.AreEqual("Hello", actual.Message);
         }
        
