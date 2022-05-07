@@ -1,30 +1,38 @@
-using System.Net;
+using NUnit.Framework;
+using System.Threading.Tasks;
 using System.Net.Http;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Xunit;
+using Newtonsoft.Json;
+using PracticeWebApp.Tests.integrationTests;
 
-namespace PracticeWebApp.Tests.integrationTests;
-
-public partial class PingTest : IClassFixture<WebApplicationFactory<Program>>
+namespace PracticeWebApp.Tests
 {
-    private readonly HttpClient client;
-    private readonly WebApplicationFactory<Program> factory;
-
-    public PingTest()
+    internal class PingTest
     {
-        var webApplicationFactory = new CustomWebApplicationFactory<Program>();
-        client = webApplicationFactory.CreateClient();
-    }
+        private HttpResponseMessage? response;
+        [SetUp]
+        public void SetUpAsync()
+        {
+            var webApplicationFactory = new CustomWebApplicationFactory<Program>();
+            HttpClient client = webApplicationFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "/ping");
+            response = client.SendAsync(request).Result;
+        }
 
-    [Fact]
-    public void ShouldReturnExpectedPingMessage()
-    {
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ping");
-        var response = client.SendAsync(request).Result;
-        var actual = JsonMapper.Deserialize<Ping>(response.Content.ReadAsStream());
-        var expected = new Ping { Message = "Hello" };
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        actual.Should().BeEquivalentTo(expected);
+        [Test]
+        public void ShouldReturnSuccessStatusCode()
+        {
+            response?.EnsureSuccessStatusCode();
+        }
+
+        [Test]
+        public async Task ShouldReturnHello()
+        {
+            var actual = JsonConvert.DeserializeObject<Ping>(
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                value: await response?.Content?.ReadAsStringAsync());
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            Assert.AreEqual("Hello", actual.Message);
+        }
+
     }
 }
