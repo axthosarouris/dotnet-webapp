@@ -30,7 +30,7 @@ namespace PracticeWebApp.Tests
             var actual = JsonConvert.DeserializeObject<Ping>(
                 value: await _response.Content.ReadAsStringAsync());
 
-            Assert.AreEqual("Hello", actual?.Message);
+            Assert.AreEqual("Hello", actual!.Message);
         }
 
     }
