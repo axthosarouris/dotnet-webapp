@@ -1,14 +1,4 @@
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Reflection;
 using BoDi;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using PracticeWebApp.Tests.integrationTests;
 using TechTalk.SpecFlow;
 
@@ -17,7 +7,6 @@ namespace PracticeWebApp.FuncTest.Hooks
     [Binding]
     public sealed class Connection
     {
-     
         private readonly IObjectContainer objectContainer;
         private static CustomWebApplicationFactory<Program> _webApplicationFactory = null!;
 
@@ -44,7 +33,6 @@ namespace PracticeWebApp.FuncTest.Hooks
         [AfterTestRun]
         public static void AfterTestRun()
         {
-          
         }
     }
 }

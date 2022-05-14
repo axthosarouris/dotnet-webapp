@@ -22,7 +22,7 @@ namespace PracticeWebApp.FuncTest.Steps
         [Given(@"that my name is ""(.*)""")]
         public void GivenThatMyNameIs(string name)
         {
-            this._pingName = name;
+            _pingName = name;
         }
 
         [When(@"I call Ping")]
@@ -33,8 +33,6 @@ namespace PracticeWebApp.FuncTest.Steps
             _response = _httpClient.SendAsync(request).Result;
             _response.Should().NotBeNull();
             _response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-
         }
 
         [Then(@"I receive ""(.*)""")]
