@@ -1,47 +1,42 @@
-using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Text.Json;
+using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Xunit;
+using Newtonsoft.Json;
+using NUnit.Framework;
 
-namespace PracticeWebApp.Tests.integrationTests;
-
-public class PingTest : IClassFixture<WebApplicationFactory<Program>>
+namespace PracticeWebApp.Tests.integrationTests
 {
-    private readonly HttpClient client;
-    private readonly WebApplicationFactory<Program> factory;
-
-    public PingTest()
+    public partial class PingTest
     {
-        var webApplicationFactory = new CustomWebApplicationFactory<Program>();
-        client = webApplicationFactory.CreateClient();
-    }
+        private HttpResponseMessage _response = new();
 
-    [Fact]
-    public void ShouldReturnExpectedPingMessage()
-    {
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ping");
-        var response = client.SendAsync(request).Result;
-        var actual = JsonMapper.Deserialize<Ping>(response.Content.ReadAsStream());
-        var expected = new Ping { Message = "Hello" };
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        actual.Should().BeEquivalentTo(expected);
-    }
-
-    private static class JsonMapper
-    {
-        private static JsonSerializerOptions defaultOptions = new()
+        [SetUp]
+        public void SetUpAsync()
         {
-            PropertyNameCaseInsensitive = true
-        };
+            var webApplicationFactory = new CustomWebApplicationFactory<Program>();
+            var client = webApplicationFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/ping/{randomString()}");
+            _response = client.SendAsync(request).Result;
+        }
 
-        public static TValue? Deserialize<TValue>(Stream json, JsonSerializerOptions? options = null)
+        private string randomString()
         {
-            return options == null
-                ? JsonSerializer.Deserialize<TValue>(json, defaultOptions)
-                : JsonSerializer.Deserialize<TValue>(json, options);
+           return Faker.Name.First();
+        }
+
+        [Test]
+        public void ShouldReturnSuccessStatusCode()
+        {
+            _response.EnsureSuccessStatusCode();
+        }
+
+        [Test]
+        public async Task ShouldReturnHello()
+        {
+            var actual = JsonConvert.DeserializeObject<Ping>(
+                value: await _response.Content.ReadAsStringAsync());
+
+            actual!.Message.Should().Contain("Hello");
         }
     }
 }
