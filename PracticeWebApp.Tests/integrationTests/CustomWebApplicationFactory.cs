@@ -9,7 +9,6 @@ namespace PracticeWebApp.Tests.integrationTests;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services => { });
-        
     }
     
     
