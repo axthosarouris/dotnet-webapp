@@ -19,13 +19,13 @@ namespace PracticeWebApp.FuncTest.Steps
         }
 
 
-        [Given(@"that my name is ""(.*)""")]
+        [Given("that my name is {string}")]
         public void GivenThatMyNameIs(string name)
         {
             _pingName = name;
         }
 
-        [When(@"I call Ping")]
+        [When("I call Ping")]
         public void WhenICallPing()
         {
             Assert.NotNull(_httpClient);
@@ -35,11 +35,11 @@ namespace PracticeWebApp.FuncTest.Steps
             _response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Then(@"I receive ""(.*)""")]
-        public void ThenIReceive(string hello)
+        [Then("I receive {string}")]
+        public void ThenIReceive(string apiMessage)
         {
             var result = _response.Content.ReadAsStringAsync().Result;
-            result.Should().Contain("Hello " + _pingName);
+            result.Should().Contain(apiMessage);
         }
     }
 }
