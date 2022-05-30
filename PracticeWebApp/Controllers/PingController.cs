@@ -14,10 +14,11 @@ public class PingController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetPing")]
-    public Ping Get()
+    [HttpGet("{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Ping))]
+    public IActionResult Ping(string name)
     {
-        return new Ping { Message = "Hello" };
-
+        var pingMessage= new Ping { Message = $"Hello {name}" };
+        return Ok(pingMessage);
     }
 }

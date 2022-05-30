@@ -3,6 +3,7 @@ using System.Text.Json;
 
 namespace PracticeWebApp.Tests.integrationTests;
 
+//TODO: this is not specific to the PingTest. It should not be inside the class PingTest 
 public partial class PingTest
 {
     private static class JsonMapper

@@ -13,6 +13,8 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="PractiveWebApp.Tests"/>
+        <InternalsVisibleTo Include="PractiveWebApp.FuncTests"/>
+
     </ItemGroup>
 
 

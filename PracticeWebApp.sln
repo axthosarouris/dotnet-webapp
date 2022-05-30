@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeWebApp", "PracticeW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeWebApp.Tests", "PracticeWebApp.Tests\PracticeWebApp.Tests.csproj", "{589DFD5F-5F65-4605-A1A0-8E61F598AC41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeWebApp.FuncTest", "PracticeWebApp.FuncTest\PracticeWebApp.FuncTest.csproj", "{D5680E22-8B69-43AA-BC2C-8FB420018FB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{589DFD5F-5F65-4605-A1A0-8E61F598AC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{589DFD5F-5F65-4605-A1A0-8E61F598AC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{589DFD5F-5F65-4605-A1A0-8E61F598AC41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5680E22-8B69-43AA-BC2C-8FB420018FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5680E22-8B69-43AA-BC2C-8FB420018FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5680E22-8B69-43AA-BC2C-8FB420018FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5680E22-8B69-43AA-BC2C-8FB420018FB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,21 +1,27 @@
-using NUnit.Framework;
-using System.Threading.Tasks;
 using System.Net.Http;
+using System.Threading.Tasks;
+using FluentAssertions;
 using Newtonsoft.Json;
-using PracticeWebApp.Tests.integrationTests;
+using NUnit.Framework;
 
-namespace PracticeWebApp.Tests
+namespace PracticeWebApp.Tests.integrationTests
 {
-    internal class PingTest
+    public partial class PingTest
     {
         private HttpResponseMessage _response = new();
+
         [SetUp]
         public void SetUpAsync()
         {
             var webApplicationFactory = new CustomWebApplicationFactory<Program>();
             var client = webApplicationFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "/ping");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/ping/{randomString()}");
             _response = client.SendAsync(request).Result;
+        }
+
+        private string randomString()
+        {
+           return Faker.Name.First();
         }
 
         [Test]
@@ -30,8 +36,7 @@ namespace PracticeWebApp.Tests
             var actual = JsonConvert.DeserializeObject<Ping>(
                 value: await _response.Content.ReadAsStringAsync());
 
-            Assert.AreEqual("Hello", actual!.Message);
+            actual!.Message.Should().Contain("Hello");
         }
-
     }
 }
