@@ -5,9 +5,14 @@ VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeWebApp", "PracticeWebApp\PracticeWebApp.csproj", "{55BE4A03-06E7-4233-AB03-A1E687AA9032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeWebApp.Tests", "PracticeWebApp.Tests\PracticeWebApp.Tests.csproj", "{589DFD5F-5F65-4605-A1A0-8E61F598AC41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeWebApp.Tests", "PracticeWebApp.Tests\PracticeWebApp.Tests.csproj", "{589DFD5F-5F65-4605-A1A0-8E61F598AC41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeWebApp.FuncTest", "PracticeWebApp.FuncTest\PracticeWebApp.FuncTest.csproj", "{D5680E22-8B69-43AA-BC2C-8FB420018FB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeWebApp.FuncTest", "PracticeWebApp.FuncTest\PracticeWebApp.FuncTest.csproj", "{D5680E22-8B69-43AA-BC2C-8FB420018FB3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{416723E3-D5EA-4483-9A07-47F2049C8D9F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
