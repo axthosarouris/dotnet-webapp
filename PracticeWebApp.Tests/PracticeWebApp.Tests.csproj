@@ -4,7 +4,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
-
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -20,6 +20,10 @@
         <PackageReference Include="FluentAssertions" Version="6.6.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="Faker.Net" Version="2.0.154" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
     
     <ItemGroup>
