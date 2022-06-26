@@ -1,6 +1,5 @@
-
 namespace PracticeWebApp
-{ 
+{
     public class Program
     {
         public static void Main(string[] args)
@@ -12,5 +11,4 @@ namespace PracticeWebApp
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
-    
 }
