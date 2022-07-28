@@ -1,4 +1,4 @@
-namespace PracticeWebApp.FuncTest.Steps
+﻿namespace PracticeWebApp.FuncTest.Steps
 {
     using System.Net;
     using System.Net.Http;
@@ -16,7 +16,6 @@ namespace PracticeWebApp.FuncTest.Steps
         private string pingName = null!;
         private HttpResponseMessage response = null!;
 
-#pragma warning disable SA1600 // Elements should be documented
         public StepDefinitions(HttpClient httpClient)
         {
             this.httpClient = httpClient;
@@ -42,7 +41,6 @@ namespace PracticeWebApp.FuncTest.Steps
         [Then("I receive {string}")]
 
         public void ThenIReceive(string apiMessage)
-#pragma warning restore SA1600 // Elements should be documented
         {
             var result = this.response.Content.ReadAsStringAsync().Result;
             result.Should().Contain(apiMessage);

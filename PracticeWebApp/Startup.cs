@@ -1,4 +1,4 @@
-namespace PracticeWebApp
+﻿namespace PracticeWebApp
 {
     using Microsoft.OpenApi.Models;
     using Swashbuckle.AspNetCore.SwaggerUI;
@@ -12,10 +12,12 @@ namespace PracticeWebApp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime and adds services to the built in IoC container.
+        /// </summary>
+        /// <param name="services">The dependent classes.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
@@ -24,7 +26,10 @@ namespace PracticeWebApp
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime and is used configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">Framework service injected by the IoC container.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
