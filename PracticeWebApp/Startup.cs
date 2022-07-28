@@ -30,6 +30,7 @@
         /// This method gets called by the runtime and is used configure the HTTP request pipeline.
         /// </summary>
         /// <param name="app">Framework service injected by the IoC container.</param>
+        /// <param name="env">Provides information about the web hosting environment an application is running in.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
