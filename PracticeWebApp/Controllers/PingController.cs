@@ -6,7 +6,6 @@ namespace PracticeWebApp.Controllers
     [Route("[controller]")]
     public class PingController : ControllerBase
     {
-
         private readonly ILogger<PingController> logger;
 
         public PingController(ILogger<PingController> logger)
