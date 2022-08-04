@@ -32,31 +32,24 @@
         /// <param name="app">Framework service injected by the IoC container.</param>
         /// <param name="env">Provides information about the web hosting environment an application is running in.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        app.UseHttpsRedirection();
-
-        app.UseRouting();
-        app.UseAuthorization();
-        app.UseEndpoints(endpoints => main
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(options => { SwaggerPageAppearsAtProjectRoot(options); });
-                void SwaggerPageAppearsAtProjectRoot(SwaggerUIOptions swaggerUiOptions)
-                {
-                    swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    swaggerUiOptions.RoutePrefix = string.Empty;
-                }
-            }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                    app.UseSwagger();
+                    app.UseSwaggerUI(options => { SwaggerPageAppearsAtProjectRoot(options); });
+                    void SwaggerPageAppearsAtProjectRoot(SwaggerUIOptions swaggerUiOptions)
+                    {
+                        swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                        swaggerUiOptions.RoutePrefix = string.Empty;
+                    }
+                }
             });
         }
     }
