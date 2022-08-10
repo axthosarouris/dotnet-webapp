@@ -1,4 +1,4 @@
-namespace PracticeWebApp.Tests.integrationTests
+namespace PracticeWebApp.Tests.IntegrationTests
 {
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -8,7 +8,7 @@ namespace PracticeWebApp.Tests.integrationTests
 
     public partial class PingTest
     {
-        private HttpResponseMessage _response = new ();
+        private HttpResponseMessage response = new ();
 
         [SetUp]
         public void SetUpAsync()
@@ -16,20 +16,19 @@ namespace PracticeWebApp.Tests.integrationTests
             var webApplicationFactory = new CustomWebApplicationFactory<Program>();
             var client = webApplicationFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, $"/ping/{this.RandomString()}");
-            _response = client.SendAsync(request).Result;
+            this.response = client.SendAsync(request).Result;
         }
-
 
         [Test]
         public void ShouldReturnSuccessStatusCode()
         {
-            _response.EnsureSuccessStatusCode();
+            this.response.EnsureSuccessStatusCode();
         }
 
         [Test]
         public async Task ShouldReturnHello()
         {
-            var readAsStringAsync =  _response.Content.ReadAsStringAsync().Result;
+            var readAsStringAsync = await this.response.Content.ReadAsStringAsync();
             var actual = JsonConvert.DeserializeObject<Ping>(readAsStringAsync);
 
             actual!.Message.Should().Contain("Hello");

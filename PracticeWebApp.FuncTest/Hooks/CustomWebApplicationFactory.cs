@@ -1,13 +1,15 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-
-namespace PracticeWebApp.Tests.integrationTests;
-
-public class CustomWebApplicationFactory<TStartup>
-    : WebApplicationFactory<TStartup> where TStartup : class
+namespace PracticeWebApp.FuncTest.Hooks
 {
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Testing;
+
+    public class CustomWebApplicationFactory<TStartup>
+        : WebApplicationFactory<TStartup>
+        where TStartup : class
     {
-        builder.ConfigureServices(services => { });
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.ConfigureServices(services => { });
+        }
     }
 }

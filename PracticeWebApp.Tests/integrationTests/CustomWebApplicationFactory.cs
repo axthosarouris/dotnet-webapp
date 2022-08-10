@@ -1,14 +1,15 @@
-﻿namespace PracticeWebApp.Tests.integrationTests
+﻿namespace PracticeWebApp.Tests.IntegrationTests
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
+
     public class CustomWebApplicationFactory<TStartup>
-        : WebApplicationFactory<TStartup> where TStartup : class
+        : WebApplicationFactory<TStartup>
+        where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(services => { });
+            builder.ConfigureServices(_ => { });
         }
     }
-
 }

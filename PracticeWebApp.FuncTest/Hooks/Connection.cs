@@ -1,38 +1,35 @@
-using BoDi;
-using PracticeWebApp.Tests.integrationTests;
-using TechTalk.SpecFlow;
-
 namespace PracticeWebApp.FuncTest.Hooks
 {
+    using BoDi;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public sealed class Connection
     {
+        private static CustomWebApplicationFactory<Program> webApplicationFactory = null!;
         private readonly IObjectContainer objectContainer;
-        private static CustomWebApplicationFactory<Program> _webApplicationFactory = null!;
-
 
         public Connection(IObjectContainer objectContainer)
         {
             this.objectContainer = objectContainer;
         }
 
-
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            _webApplicationFactory = new CustomWebApplicationFactory<Program>();
-        }
-
-        [BeforeScenario]
-        public void InitializeClient()
-        {
-            var httpClient = _webApplicationFactory.CreateClient();
-            objectContainer.RegisterInstanceAs(httpClient);
+            webApplicationFactory = new CustomWebApplicationFactory<Program>();
         }
 
         [AfterTestRun]
         public static void AfterTestRun()
         {
+        }
+
+        [BeforeScenario]
+        public void InitializeClient()
+        {
+            var httpClient = webApplicationFactory.CreateClient();
+            this.objectContainer.RegisterInstanceAs(httpClient);
         }
     }
 }

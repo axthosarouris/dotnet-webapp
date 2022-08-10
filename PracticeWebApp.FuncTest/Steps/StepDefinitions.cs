@@ -21,7 +21,6 @@
             this.httpClient = httpClient;
         }
 
-
         [Given("that my name is {string}")]
         public void GivenThatMyNameIs(string name)
         {

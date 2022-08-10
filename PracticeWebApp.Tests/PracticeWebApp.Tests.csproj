@@ -30,4 +30,11 @@
         <ProjectReference Include="..\PracticeWebApp\PracticeWebApp.csproj" />
     </ItemGroup>
 
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\StyleCopRuleSet.ruleset</CodeAnalysisRuleSet>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  
 </Project>

@@ -12,25 +12,17 @@
 
         public IConfiguration Configuration { get; }
 
-        /// <summary>
-        /// This method gets called by the runtime and adds services to the built in IoC container.
-        /// </summary>
-        /// <param name="services">The dependent classes.</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpecFlowCalculatorAPI", Version = "v1" });
-            });
+            services.AddSwaggerGen(
+                c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpecFlowCalculatorAPI", Version = "v1" });
+                });
         }
 
-        /// <summary>
-        /// This method gets called by the runtime and is used configure the HTTP request pipeline.
-        /// </summary>
-        /// <param name="app">Framework service injected by the IoC container.</param>
-        /// <param name="env">Provides information about the web hosting environment an application is running in.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -49,12 +41,10 @@
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-
-
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+                {
+                    endpoints.MapControllers();
+                });
         }
     }
 }
