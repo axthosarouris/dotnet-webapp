@@ -14,6 +14,7 @@
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
+      <PackageReference Include="Npgsql" Version="6.0.6" />
         <PackageReference Include="Evolve" Version="3.0.0" />
     </ItemGroup>
 
@@ -22,6 +23,12 @@
         <InternalsVisibleTo Include="PractiveWebApp.FuncTests" />
 
     </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="db\migrations\**\*.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 
   <PropertyGroup>
