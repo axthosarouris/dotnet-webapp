@@ -9,7 +9,7 @@
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(_ => { });
+            builder.ConfigureServices(config => { });
         }
     }
 }
