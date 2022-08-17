@@ -1,60 +1,73 @@
-﻿namespace PracticeWebApp
+using Microsoft.OpenApi.Models;
+using Npgsql;
+using Swashbuckle.AspNetCore.SwaggerUI;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(config =>
+    config.SwaggerDoc("v1", new OpenApiInfo { Title = "SpecFlowCalculatorAPI", Version = "v1" }));
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    using Npgsql;
-    using Environments = Microsoft.Extensions.Hosting.EnvironmentName;
+    app.UseSwagger();
+    app.UseSwaggerUI(options => { SwaggerPageAppearsAtProjectRoot(options); });
+}
 
-    public class Program
+MigrateDatabase(app);
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();
+
+void SwaggerPageAppearsAtProjectRoot(SwaggerUIOptions swaggerUiOptions)
+{
+    swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    swaggerUiOptions.RoutePrefix = string.Empty;
+}
+
+static async void MigrateDatabase(WebApplication app)
+{
+    try
     {
-        private const string AspnetcoreEnvironment = "ASPNETCORE_ENVIRONMENT";
-
-        public static void Main(string[] args)
+        if (NotInDevelopmentMode(app))
         {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            MigrateDatabase();
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-        }
-
-        private static async void MigrateDatabase()
-        {
-            try
-            {
-                if (NotInDevelopmentMode())
-                {
-                    await PerformMigration();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Error.Write(ex.Message);
-                throw;
-            }
-        }
-
-        private static bool NotInDevelopmentMode()
-        {
-            var runningEnvironment = Environment.GetEnvironmentVariable(AspnetcoreEnvironment);
-            return !runningEnvironment?.Equals("Development") ?? false;
-        }
-
-        private static async Task PerformMigration()
-        {
-            var location = "db/migrations";
-            var connString =
-                "Host=127.0.0.1;Username=orestis;Password=mypassword;Database=webappexampledatabase";
-
-            await using var conn = new NpgsqlConnection(connString);
-            await conn.OpenAsync();
-            var evolve = new Evolve.Evolve(conn, msg => Console.Out.Write(msg))
-            {
-                Locations = new[] { location }, IsEraseDisabled = true,
-            };
-
-            evolve.Migrate();
+            await PerformMigration();
         }
     }
+    catch (Exception ex)
+    {
+        Console.Error.Write(ex.Message);
+        throw;
+    }
+}
+
+static bool NotInDevelopmentMode(WebApplication app)
+{
+    return !app.Environment.IsDevelopment();
+}
+
+static async Task PerformMigration()
+{
+    var location = "db/migrations";
+    var connString =
+        "Host=127.0.0.1;Username=orestis;Password=mypassword;Database=webappexampledatabase";
+
+    await using var conn = new NpgsqlConnection(connString);
+    await conn.OpenAsync();
+    var evolve = new Evolve.Evolve(conn, msg => Console.Out.Write(msg))
+    {
+        Locations = new[] { location }, IsEraseDisabled = true,
+    };
+
+    evolve.Migrate();
+}
+
+public partial class Program
+{
 }
