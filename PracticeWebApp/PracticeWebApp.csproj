@@ -1,28 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>	
-	    <EnableNETAnalyzers>true</EnableNETAnalyzers>		
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <UserSecretsId>7e99029e-15ca-444a-aa69-cd871768cd9a</UserSecretsId>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
-      <PackageReference Include="Npgsql" Version="6.0.6" />
-        <PackageReference Include="Evolve" Version="3.0.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
+    <PackageReference Include="Npgsql" Version="6.0.6" />
+    <PackageReference Include="Evolve" Version="3.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.4" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.10" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <InternalsVisibleTo Include="PractiveWebApp.Tests" />
-        <InternalsVisibleTo Include="PractiveWebApp.FuncTests" />
+  <ItemGroup>
+    <InternalsVisibleTo Include="PractiveWebApp.Tests" />
+    <InternalsVisibleTo Include="PractiveWebApp.FuncTests" />
 
-    </ItemGroup>
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="db\migrations\**\*.sql">
@@ -37,5 +42,5 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  
+
 </Project>

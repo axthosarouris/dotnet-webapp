@@ -24,6 +24,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Specification.Tests" Version="6.0.10" />
     </ItemGroup>
     
     <ItemGroup>

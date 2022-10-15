@@ -40,6 +40,7 @@
     <PackageReference Include="SpecFlow" Version="3.9.74" />
     <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Specification.Tests" Version="6.0.10" />
   </ItemGroup>
   
   <ItemGroup>

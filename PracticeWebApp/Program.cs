@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using PracticeWebApp;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,6 @@ builder.Services.AddSwaggerGen(config =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -19,6 +19,7 @@ if (app.Environment.IsDevelopment())
 }
 
 MigrateDatabase(app);
+
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
@@ -35,9 +36,9 @@ static async void MigrateDatabase(WebApplication app)
 {
     try
     {
-        if (NotInDevelopmentMode(app))
+        if (!app.Environment.IsEnvironment("InMemory"))
         {
-            await PerformMigration();
+            await PerformMigration(app.Configuration);
         }
     }
     catch (Exception ex)
@@ -47,22 +48,15 @@ static async void MigrateDatabase(WebApplication app)
     }
 }
 
-static bool NotInDevelopmentMode(WebApplication app)
+static async Task PerformMigration(IConfiguration configuration)
 {
-    return !app.Environment.IsDevelopment();
-}
-
-static async Task PerformMigration()
-{
-    var location = "db/migrations";
-    var connString =
-        "Host=127.0.0.1;Username=orestis;Password=mypassword;Database=webappexampledatabase";
-
-    await using var conn = new NpgsqlConnection(connString);
+    var connectionDetails = configuration.GetSection("DbConnectionDetails").Get<DbConnectionDetails>();
+    await using var conn = new NpgsqlConnection(connectionDetails.ConnectionString(configuration).ConnectionString);
     await conn.OpenAsync();
+    var migrationFiles = configuration.GetValue<string>("MigrationFiles");
     var evolve = new Evolve.Evolve(conn, msg => Console.Out.Write(msg))
     {
-        Locations = new[] { location }, IsEraseDisabled = true,
+        Locations = new[] { migrationFiles }, IsEraseDisabled = true,
     };
 
     evolve.Migrate();

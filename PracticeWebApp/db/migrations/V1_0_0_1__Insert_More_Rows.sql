@@ -1,1 +1,1 @@
-insert into Person values (2, 'Peter');
+insert into Person values (3, 'Michael');
