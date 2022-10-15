@@ -1,42 +1,42 @@
-using System.Net.Http;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Newtonsoft.Json;
-using NUnit.Framework;
-
-namespace PracticeWebApp.Tests.integrationTests
+namespace PracticeWebApp.Tests.IntegrationTests
 {
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Newtonsoft.Json;
+    using NUnit.Framework;
+
     public partial class PingTest
     {
-        private HttpResponseMessage _response = new();
+        private HttpResponseMessage response = new ();
 
         [SetUp]
         public void SetUpAsync()
         {
             var webApplicationFactory = new CustomWebApplicationFactory<Program>();
             var client = webApplicationFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/ping/{randomString()}");
-            _response = client.SendAsync(request).Result;
-        }
-
-        private string randomString()
-        {
-           return Faker.Name.First();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/ping/{this.RandomString()}");
+            this.response = client.SendAsync(request).Result;
         }
 
         [Test]
         public void ShouldReturnSuccessStatusCode()
         {
-            _response.EnsureSuccessStatusCode();
+            this.response.EnsureSuccessStatusCode();
         }
 
         [Test]
         public async Task ShouldReturnHello()
         {
-            var actual = JsonConvert.DeserializeObject<Ping>(
-                value: await _response.Content.ReadAsStringAsync());
+            var readAsStringAsync = await this.response.Content.ReadAsStringAsync();
+            var actual = JsonConvert.DeserializeObject<Ping>(readAsStringAsync);
 
             actual!.Message.Should().Contain("Hello");
+        }
+
+        private string RandomString()
+        {
+            return Faker.Name.First();
         }
     }
 }

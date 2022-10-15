@@ -1,44 +1,47 @@
-using System.Net;
-using System.Net.Http;
-using FluentAssertions;
-using TechTalk.SpecFlow;
-using Xunit;
-
-namespace PracticeWebApp.FuncTest.Steps
+﻿namespace PracticeWebApp.FuncTest.Steps
 {
+    using System.Net;
+    using System.Net.Http;
+    using FluentAssertions;
+    using TechTalk.SpecFlow;
+    using Xunit;
+
+    /// <summary>
+    /// This class includes the setup for our functional tests.
+    /// </summary>
     [Binding]
     public sealed class StepDefinitions
     {
-        private readonly HttpClient _httpClient;
-        private string _pingName = null!;
-        private HttpResponseMessage _response = null!;
+        private readonly HttpClient httpClient;
+        private string pingName = null!;
+        private HttpResponseMessage response = null!;
 
         public StepDefinitions(HttpClient httpClient)
         {
-            _httpClient = httpClient;
+            this.httpClient = httpClient;
         }
-
 
         [Given("that my name is {string}")]
         public void GivenThatMyNameIs(string name)
         {
-            _pingName = name;
+            this.pingName = name;
         }
 
         [When("I call Ping")]
         public void WhenICallPing()
         {
-            Assert.NotNull(_httpClient);
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/ping/{_pingName}");
-            _response = _httpClient.SendAsync(request).Result;
-            _response.Should().NotBeNull();
-            _response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Assert.NotNull(this.httpClient);
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/ping/{this.pingName}");
+            this.response = this.httpClient.SendAsync(request).Result;
+            this.response.Should().NotBeNull();
+            this.response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Then("I receive {string}")]
+
         public void ThenIReceive(string apiMessage)
         {
-            var result = _response.Content.ReadAsStringAsync().Result;
+            var result = this.response.Content.ReadAsStringAsync().Result;
             result.Should().Contain(apiMessage);
         }
     }
